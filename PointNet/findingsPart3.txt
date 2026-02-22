@@ -1,0 +1,33 @@
+Part 3.1:
+In the first subset, one spatial dimension was randomly removed from each sample, 
+effectively projecting the 3D point cloud into a 2D plane. Training the model on this data resulted in a noticeable decrease in classification performance. 
+This indicates that PointNet strongly relies on the full 3D structure of objects, and losing even a single coordinate reduces its ability to capture meaningful geometric relationships between points.
+
+In the second subset, random rotations were applied followed by a perspective projection along a random dimension. 
+This transformation introduced both viewpoint variation and geometric distortion. The model showed further performance degradation compared to the original dataset, 
+suggesting that perspective distortion affects the relative spatial arrangement of points and makes feature learning more difficult. 
+Although PointNet is designed to be somewhat invariant to rotations (via the T-Net), large distortions still negatively impact performance.
+
+Overall, these experiments demonstrate that PointNet depends heavily on accurate 3D spatial information, 
+and that removing dimensions or applying strong projections reduces the quality of learned features.
+
+Part 3.2:
+After training the modified model on the dataset, the results showed that reducing the network size slightly decreased the model’s ability to capture complex geometric features, 
+which led to a small drop in classification accuracy. The additional hidden layer partially compensated for this reduction by allowing deeper feature representation.
+
+Replacing ReLU with LeakyReLU improved training stability by preventing dead neurons and allowing gradient flow for negative inputs. However, 
+the most significant change was replacing max pooling with average pooling. Max pooling selects the strongest local feature, 
+while average pooling aggregates information from all points. As a result, average pooling produced smoother global representations but slightly reduced the model’s sensitivity to 
+distinctive structural features.
+
+Overall, the modified architecture demonstrated that PointNet’s performance is sensitive to feature dimensionality and pooling strategy, 
+and that max pooling remains particularly effective for capturing dominant geometric patterns.
+
+The transformation matrices predicted by each network were applied directly to the point coordinates before visualization.
+
+The results showed that both networks learned meaningful spatial transformations that aligned the point clouds into more canonical orientations. 
+The baseline PointNet typically produced transformations that focused on stabilizing rotation and scale. 
+The modified network often produced slightly stronger or more irregular transformations due to the reduced feature size and different pooling strategy, 
+but it still successfully normalized object orientation.
+
+These findings confirm that the T-Net successfully learns spatial alignment transformations and plays an important role in improving the invariance of PointNet to geometric variations.
