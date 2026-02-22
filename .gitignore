@@ -1,0 +1,8 @@
+.vscode/*
+bin/*
+!bin/.keep
+PointNet/.venv/*
+PointNet/data/*
+PointNet/.ipynb_checkpoints/*
+PointNet/subset/*
+PointNet/*
